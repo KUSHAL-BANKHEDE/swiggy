@@ -3,7 +3,7 @@ import { ReactDOM } from "react";
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import './App.css';
-import {createBrowserRouter , RouterProvider} from'react-router-dom';
+import {createBrowserRouter , Outlet, RouterProvider} from'react-router-dom';
 import Help from "./Components/Help";
 import Error from "./Components/Error";
 import Contect from "./Components/Contect";
@@ -16,7 +16,7 @@ const  AppLayout = () => {
 
           <div className ="app">
                <Header/>
-               <RouterProvider router={appRouter}/>
+               <Outlet/>
           </div>
 
   )
@@ -26,27 +26,32 @@ const  AppLayout = () => {
 const appRouter = createBrowserRouter([
   {
     path:"/",
-    element:<Body/>,
-    errorElement:<Error/>
+    element:<AppLayout/>,
+    errorElement:<Error/>,
+    children:[
+      {
+        path:"/",
+        element:<Body/>
+      },
+      {
+        path:"/help",
+        element:<Help/>
+      },
+    
+      {
+        path:"/contect",
+        element:<Contect/>
+      },
+      {
+        path:"/about",
+        element:<About/>
+      }
+    
+    ]
   },
-  {
-    path:"/help",
-    element:<Help/>
-  },
+  
 
-  {
-    path:"/contect",
-    element:<Contect/>
-  },
-  {
-    path:"/about",
-    element:<About/>
-  }
-
-
-])
- const App =()=>{
-  return <AppLayout/>
- }
-
-export default App;
+]
+)
+ 
+export default appRouter;

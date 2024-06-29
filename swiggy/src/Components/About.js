@@ -1,4 +1,5 @@
-const About=()=>{
+import React from 'react';
+const About = ()=>{
     return (
         <div>
             AboutUs

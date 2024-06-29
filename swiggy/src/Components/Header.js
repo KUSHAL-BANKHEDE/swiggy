@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../Utils/constant";
 const Header = ()=>{
@@ -12,7 +13,7 @@ const Header = ()=>{
                     <Link to="/">Home</Link>
                   </li>
                   <li>
-                       <Link to="/contect">contect us</Link>
+                    <Link to="/contect">contect us</Link>
                     
                   </li>
 

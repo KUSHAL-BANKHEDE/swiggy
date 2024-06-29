@@ -12,6 +12,7 @@ const Restrocart =(props)=>{
            cuisines,
            costForTwo,
            sla,
+           
         } = resData?.info;
 
        
