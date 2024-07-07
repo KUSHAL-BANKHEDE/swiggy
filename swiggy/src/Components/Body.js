@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Restrocart from "./Restrocart";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 
 const Body =()=>{
@@ -25,7 +26,7 @@ const Body =()=>{
         
         setListOfRestro(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilterRestro(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        
     
       }
      
@@ -59,7 +60,10 @@ const Body =()=>{
         <div className="restro-cart"> 
         
         {filterRestro.map((restaurant)=>(
-          <Restrocart key={restaurant.info.id} resData={restaurant}/>
+          <Link key={restaurant.info.id}
+             to={"restaurant/"+restaurant.info.id}>
+              <Restrocart  resData={restaurant}/>
+           </Link>
         ))}
         </div>
 

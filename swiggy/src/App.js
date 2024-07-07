@@ -1,13 +1,12 @@
-import react from "react";
-import { ReactDOM } from "react";
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import './App.css';
-import {createBrowserRouter , Outlet, RouterProvider} from'react-router-dom';
+import {createBrowserRouter , Outlet} from'react-router-dom';
 import Help from "./Components/Help";
 import Error from "./Components/Error";
 import Contect from "./Components/Contect";
 import About from "./Components/About";
+import RestaurentMenu from "./Components/RestaurentMenu";
 
 
 
@@ -45,6 +44,10 @@ const appRouter = createBrowserRouter([
       {
         path:"/about",
         element:<About/>
+      },
+      {
+        path:"/restaurant/:resId",
+        element:<RestaurentMenu/>
       }
     
     ]
