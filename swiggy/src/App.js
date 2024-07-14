@@ -8,16 +8,20 @@ import Contect from "./Components/Contect";
 import About from "./Components/About";
 import RestaurentMenu from "./Components/RestaurentMenu";
 import ItemCard from "./Components/ItemCard";
+import { Provider } from "react-redux";
+import appStore from "./Utils/appStore";
+import Cart from "./Components/Cart";
 
 
 
 const  AppLayout = () => { 
   return (
-
+      <Provider store={appStore}>
           <div className ="app">
                <Header/>
                <Outlet/>
           </div>
+      </Provider>
 
   )
   
@@ -53,6 +57,10 @@ const appRouter = createBrowserRouter([
       {
         path:"/item/:itemId",
         element:<ItemCard/>
+      },
+      {
+        path:"/cart",
+        element: <Cart/>
       }
     
     ]

@@ -49,17 +49,6 @@ const Restrocart = (props) => {
   );
 };
 
-export const RestroCartPrapoted = (Restrocart)=>{
-  return(props)=>{
-    return(
-         <div>
-          <label>
-            Prampted
-          </label>
-          <Restrocart{...props}/>
-         </div>
-    )
-  }
-}
+
 
 export default Restrocart;

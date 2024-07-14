@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import Restrocart, {RestroCartPrapoted} from "./Restrocart";
+import Restrocart from "./Restrocart";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import CirculerCard from "./CircularCard";
+
 
 
 const Body =()=>{
@@ -12,7 +13,8 @@ const Body =()=>{
   const[filterRestro ,setFilterRestro]= useState([]);
   const[topReso , setTopReso] = useState([]);
   const[onMind , setOnMind] = useState([]);
-  const RestroCardPrapoted = RestroCartPrapoted(Restrocart);
+  const [sortOption, setSortOption] = useState("");
+ 
 
     useEffect(()=>{
         fetchData();
@@ -36,8 +38,33 @@ const Body =()=>{
         console.log(onMind?.id)
     
       }
-     
 
+      const handleSortChange = (e) => {
+        const sortOption = e.target.value;
+        setSortOption(sortOption);
+        let sortedRestros = [...filterRestro];
+    
+        switch (sortOption) {
+          case "priceLowToHigh":
+            sortedRestros.sort((a, b) => a.info.costForTwo - b.info.costForTwo);
+            break;
+          case "priceHighToLow":
+            sortedRestros.sort((a, b) => b.info.costForTwo - a.info.costForTwo);
+            break;
+          case "time":
+            sortedRestros.sort((a, b) => a.info.sla.deliveryTime- b.info.sla.deliveryTime);
+            break;
+          case "rating":
+            sortedRestros.sort((a, b) => b.info.avgRating - a.info.avgRating);
+            break;
+          default:
+            break;
+        }
+    
+        setFilterRestro(sortedRestros);
+      };
+     
+  
       if(listOfRestro.length === 0){
         return <Shimmer/>
       }
@@ -46,26 +73,7 @@ const Body =()=>{
     return(
       <div className="mx-10">
 
-        <div className="search"> 
-        <div className=" py-4 p-4  bg-slate-600 rounded-xl ">
-              <input type="text" className=" border border-solid border-back " value={searchText} onChange={(e)=>{
-                setSearchText(e.target.value);
-              }}/>
-              <button 
-                className="px-4 py-1 bg-green-100 m-4 rounded-lg shadow-lg"
-              onClick={()=>{
-                 console.log(searchText);
-                
-                 const searchRestro = listOfRestro.filter((res)=>
-                 res?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
-                 );
-                 setFilterRestro(searchRestro);
-              }}
-              >
-                Search
-                </button>
-        </div>
-        </div>
+       
 
           
       <div className="p-4 m-4 py-16 border-b-2">
@@ -91,19 +99,50 @@ const Body =()=>{
       </div>
     </div>
 
+    <div className="search"> 
+        <div className=" py-4 p-4 m-4 bg-slate-600 rounded-xl flex items-baseline ">
+              <input type="text" className=" border border-solid border-back h-8" value={searchText} onChange={(e)=>{
+                setSearchText(e.target.value);
+              }}/>
+              <button 
+                className="px-4 py-1 bg-green-100 m-4 rounded-lg shadow-lg"
+              onClick={()=>{
+                 console.log(searchText);
+                
+                 const searchRestro = listOfRestro.filter((res)=>
+                 res?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
+                 );
+                 setFilterRestro(searchRestro);
+              }}
+              >
+                Search
+                </button>
+              
+              <select
+               className=" bg-green-100 m-4 rounded-lg ml-auto "
+               value={sortOption}
+               onChange={handleSortChange}
+              >
+                 <option value="">Sort by</option>
+                  <option value="priceLowToHigh">Price: Low to High</option>
+                  <option value="priceHighToLow">Price: High to Low</option>
+                  <option value="time">Delivery Time</option>
+                  <option value="rating">Rating</option>
+              </select>
+                 
+        </div>
+        </div>
+
 
         <div className="restro-cart flex flex-wrap p-4 m-4 space-x-1 space-y-1 "> 
         
         {filterRestro.map((restaurant)=>(
           <Link key={restaurant.info.id}
              to={"restaurant/"+restaurant.info.id}>
-              {
-               restaurant.info.promoted ? (
-               <RestroCardPrapoted  resData={restaurant} /> 
-               ) : (
+              
                <Restrocart  resData={restaurant}/>
-               )
-              }
+               
+              
               
            </Link>
         ))}

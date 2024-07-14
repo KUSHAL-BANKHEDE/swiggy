@@ -7,17 +7,17 @@ import { RestaurentCategory} from "./RestaurentCategory";
 const RestaurentMenu =()=>{
     const[menu ,setMenu] = useState(null);
     const {resId} = useParams();
-    const [showIndex, setShowIndex] = useState(0)
-    console.log(useParams());
+    const [showIndex, setShowIndex] = useState(null)
+    //console.log(useParams());
     useEffect(()=>{
         fetchmanu();
     } ,[]);
 
     const fetchmanu = async()=>{
         const data = await fetch(MENU_API+resId);
-        console.log(MENU_API+resId);
+       // console.log(MENU_API+resId);
          const json = await data.json();
-        console.log(json.data);
+       // console.log(json.data);
         setMenu(json.data);
         
     }
@@ -35,7 +35,7 @@ const RestaurentMenu =()=>{
             c.card?.card?.["@type"]=== "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
      );
      
-     console.log(categories);
+     //console.log(categories);
     
     return(
        
