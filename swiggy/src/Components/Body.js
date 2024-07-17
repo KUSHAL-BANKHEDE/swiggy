@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Restrocart from "./Restrocart";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import CirculerCard from "./CircularCard";
+import CirculerCard from "./CircularCarousel";
 
 
 
@@ -21,23 +21,27 @@ const Body =()=>{
     } , [])
 
     const fetchData = async()=>{
-        const data = await fetch("/dapi/restaurants/list/v5?lat=26.87560&lng=80.91150&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        );
+        const data = await fetch("https://food-app.kushal-bankhede.live/api/restaurant");
         
         const json = await data.json();
+
+        console.log(json);
         
         // console.log(json);
 
         // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setOnMind (json?.data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info);
-        setTopReso(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setListOfRestro(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilterRestro(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setOnMind (json?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info);
+        setTopReso(json?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setListOfRestro(json?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilterRestro(json?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
         // console.log(listOfRestro);
         console.log(onMind?.id)
     
       }
+
+
+     
 
       const handleSortChange = (e) => {
         const sortOption = e.target.value;
@@ -74,7 +78,7 @@ const Body =()=>{
       <div className="mx-10">
 
        
-
+       {/* //Circular Carousel */}
           
       <div className="p-4 m-4 py-16 border-b-2">
         <h4 className="font-extrabold py-7 text-3xl">What's on your mind?</h4>
@@ -86,13 +90,15 @@ const Body =()=>{
           ))}
         </div>
       </div>
-
+       
+       {/* //chaning */}
 
         <div className="p-4 m-4 py-16 border-b-2">
       <h4 className="font-extrabold py-7 text-3xl">Top restaurant chains</h4>
       <div className="flex overflow-x-auto  whitespace-nowrap">
         {topReso.map((restaurant) => (
           <Link key={restaurant.info.id} to={`restaurant/${restaurant.info.id}`}>
+
             <Restrocart resData={restaurant} />
           </Link>
         ))}
