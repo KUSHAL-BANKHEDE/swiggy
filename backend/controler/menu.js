@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+
 
 const menudata = async(req , res)=>{
     const {resId} = req.params 
