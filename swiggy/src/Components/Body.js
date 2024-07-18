@@ -21,7 +21,7 @@ const Body =()=>{
     } , [])
 
     const fetchData = async()=>{
-        const data = await fetch("https://food-app.kushal-bankhede.live/api/restaurant");
+        const data = await fetch("http://localhost:3000/api/restaurant");
         
         const json = await data.json();
 
