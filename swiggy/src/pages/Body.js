@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import Restrocart from "./Restrocart";
-import Shimmer from "./Shimmer";
+import Restrocart from "../Components/Restrocart";
+import Shimmer from "../Components/shimmers/bodyShimmer";
 import { Link } from "react-router-dom";
-import CirculerCard from "./CircularCarousel";
+import CirculerCard from "../Components/Carousel/CircularCarousel";
+import { RESTAURENT_API, UPDATE_API } from "../Utils/constant";
 
 
 
@@ -14,14 +15,14 @@ const Body =()=>{
   const[topReso , setTopReso] = useState([]);
   const[onMind , setOnMind] = useState([]);
   const [sortOption, setSortOption] = useState("");
- 
+  const[isLoading , setIsLoading] = useState("true");
 
     useEffect(()=>{
         fetchData();
     } , [])
 
     const fetchData = async()=>{
-        const data = await fetch("https://food-app.kushal-bankhede.live/api/restaurant");
+        const data = await fetch(RESTAURENT_API);
         
         const json = await data.json();
 
@@ -34,13 +35,22 @@ const Body =()=>{
         setTopReso(json?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setListOfRestro(json?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilterRestro(json?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setIsLoading(false);
 
         // console.log(listOfRestro);
-        console.log(onMind?.id)
+        console.log(onMind)
     
       }
+    
+      const fetchMoreData = async()=>{
+        const data = await fetch(UPDATE_API);
+        const json = await data.json();
+        console.log(json);
+      }
 
-
+      if(isLoading){
+        return <Shimmer/>
+      }
      
 
       const handleSortChange = (e) => {
@@ -67,11 +77,8 @@ const Body =()=>{
     
         setFilterRestro(sortedRestros);
       };
-     
-  
-      if(listOfRestro.length === 0){
-        return <Shimmer/>
-      }
+      
+      
       
      
     return(

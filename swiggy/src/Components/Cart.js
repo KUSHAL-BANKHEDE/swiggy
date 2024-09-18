@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import ItemList from "./ItemList";
-import { Button } from "@nextui-org/react";
+import ItemList from "./menu/ItemList";
+
 import { clearCart } from "../Utils/cartSlice";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Cart = ()=>{
+    const[itemcount , setItemcount] = useState(0);
    
     const cartItem = useSelector((store)=> store.cart.items);
 
@@ -13,6 +15,8 @@ const Cart = ()=>{
     const clearCartHandler = ()=>{
         dispatch(clearCart());
     }
+    
+
 
     return (
         <div className=" text-center m-10 p-10">
@@ -33,6 +37,9 @@ const Cart = ()=>{
                 </div>
             
             )}
+            
+
+
            <ItemList item = {cartItem}/>
         </div>
     )

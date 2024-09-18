@@ -5,14 +5,18 @@ const restaurentRout = require('./routers/restaurentApi');
 const menuRout = require('./routers/menuApi');
 const cors = require('cors');
 const test = require("./controler/test");
+const update = require("./routers/UpdateApi")
 
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    credentials: true
+  }));
 // app.get("/" , (req , res)=>{
 //     res.send("hello world");
 // })
 
-app.use('/api' , restaurentRout ,  menuRout , test);
+app.use('/api' , restaurentRout ,  menuRout ,update ,test  );
 
 app.listen(PORT , ()=>{
     console.log(`server is running on port ${PORT}`);

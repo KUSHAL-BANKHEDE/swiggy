@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Restrocart from "./Restrocart";
-import Shimmer from "./Shimmer";
+import Restrocart from "../Restrocart";
+import Shimmer from "../shimmers/bodyShimmer";
 import { Link } from "react-router-dom";
 
 const ItemCard = () => {
